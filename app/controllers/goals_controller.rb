@@ -1,7 +1,7 @@
 class GoalsController < ApplicationController
   def index
-    @goals = Goal.where(private?: false)
-    @goals += Goal.where(user_id: current_user.id).where(private?: true)
+    @goals = Goal.where(restricted: false)
+    @goals += Goal.where(user_id: current_user.id).where(restricted: true)
     render :index
   end
   
@@ -24,12 +24,33 @@ class GoalsController < ApplicationController
   end
   
   def show
-    @goal = Goal.find(params[:id])
+    set_current_goal
     render :show
+  end
+  
+  def edit
+    set_current_goal
+    render :edit
+  end
+  
+  def update
+    set_current_goal
+    
+    if @goal.update(goal_params)
+      flash.now[:alerts] = "You did gud bb"
+      redirect_to goal_url(@goal)
+    else
+      flash.now[:alerts] = @goal.errors.full_messages 
+      render :new
+    end
   end
   
   private
   def goal_params
-    params.require(:goal).permit(:title, :body, :private?)
+    params.require(:goal).permit(:title, :body, :restricted)
+  end
+  
+  def set_current_goal
+    @goal = Goal.find(params[:id])
   end
 end

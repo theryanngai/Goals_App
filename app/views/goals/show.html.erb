@@ -2,4 +2,8 @@
 <h3>by <%= @goal.user.username %></h3>
 <h4><%= @goal.body %></h4>
 
+<% if current_user.id == @goal.user_id %>
+  <%= button_to "Delete Goal", goal_url(@goal), method: :delete %>
+<% end %>
+
 

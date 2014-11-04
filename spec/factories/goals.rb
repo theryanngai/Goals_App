@@ -6,7 +6,7 @@ FactoryGirl.define do
     completed false
     title Faker::Lorem.word
     body  Faker::Lorem.sentences.join(" ")
-    private? [true, false].sample
+    restricted [true, false].sample
 
     factory :completed_goal do
       completed true

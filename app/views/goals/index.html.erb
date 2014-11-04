@@ -2,6 +2,8 @@
 
 <ul>
   <% @goals.each do |goal| %>
-    <li><%= link_to goal.title, goal_url(goal) %></li>
+    <li><%= link_to goal.title, goal_url(goal) %> - 
+      <%= goal.user.username%>
+    </li>
   <% end %>
 </ul>
