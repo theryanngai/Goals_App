@@ -1,4 +1,12 @@
 <!DOCTYPE html>
+<%= flash[:alerts].join("<br>").html_safe if flash[:alerts] %>
+
+<% if current_user %>
+  <%= button_to "Log Out", session_url, method: :delete %>
+  <br>
+  <b><i>You are currently logged in as <%= current_user.username %></b></i>
+<% end %>
+
 <html>
 <head>
   <title>DoThings</title>
